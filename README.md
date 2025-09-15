@@ -1,54 +1,61 @@
-# Założenia
+# Theft Prototype
 
-Jest sporo mechanik i niewiele czasu, więc – jak przedstawiono w zadaniu – poszedłem w **prototyp**.  
-Nie dodawałem więcej struktury do kodu niż to konieczne – żadnego `LevelController` itp.  
-Na przykład dla skryptów UI wybrałem najprostszy sposób pozyskania odpowiednich referencji.  
+This project started as a **test assignment** for a game dev position.  
+The task was to build a simple prototype of a theft system in Unity where the player steals objects from a secured area, avoids cameras, and sees progress in the UI.  
 
-Gdyby to był pełnoprawny projekt, system byłby bardziej rozbudowany i nie opierałby się na założeniach typu *"jest jeden gracz na levelu"*, czy hardcoded stringi.  
-Do prototypu jednak uważam, że to dobre podejście.
+The base project was provided (Unity 6000.0.41f1) and already included:  
+- a simple character controller (part of the task was to clean up this one)
+- a prototyping scene  
 
----
-# Czas
-
-Założyłem, że zmieszczę się w ustalonym przez siebie limicie **8 godzin** – udało się, mimo że do dodania było sporo funkcjonalności.
+I had to fix and extend it with object carrying, camera detection, UI feedback, and basic game flow.  
 
 ---
 
-# Napisanie logiki przenoszenia obiektów
-Starałem się zachować 'symulatorowy' feeling, więc dałem możliwość rzutu obiektem przy upuszczaniu poprzez movement postaci lub szybki obrót kamery. 
+## Timebox
+
+I gave myself a limit of **8 hours** to finish the prototype. The scope was big for such a short time, but I managed to get all the requested mechanics working within that limit.  
 
 ---
 
-# System wykrywania gracza przez kamery
+## Object Carrying
 
-Tutaj poszedłem w niebanalne podejście – tworzę **runtime mesh**, który wykrywa gracza.  
-Wybrałem to rozwiązanie, bo zależało mi, aby w sensowny sposób pokazać graczowi obszar, w którym jest wykrywany.  
-
-Myślę, że efekt jest całkiem fajny, choć oczywiście można było to zrobić dużo prościej – ale wtedy bez wizualizacji dla gracza.
+I implemented picking up, carrying, and dropping objects through the existing interaction system.  
+I aimed for a bit of a "simulation feel" so when you drop an object it can inherit some momentum from the player movement or quick camera turns.  
 
 ---
 
-# Reakcja na wykrycie
+## Camera Detection
 
-Na tym etapie brakowało już czasu, więc dodałem:
+Instead of going with the simplest ray or angle check, I tried a different approach.  
+At runtime, each camera generates a **mesh-shaped detection zone** that checks if the player is inside.  
 
-- zmiana materiału obszaru widzenia kamery 
-- Detection progress bar  
-- Bardzo prosty game over
-
----
-
-# Refaktor
-
-Dużo zmieniłem w dostarczonym kodzie, dostosowując go do swojego stylu programowania.  
-Przy ewentualnej współpracy oczywiście dostosowuję się do tego, co aktualnie jest w codebase, ale tutaj był tego bardzo mały procent i miał się odbyć refactoring.
+This allowed me to give clear **visual feedback** to the player, showing where they can be spotted.  
+It could have been done more simply, but I liked the idea of making it visible and intuitive.  
 
 ---
 
-# Niedoskonałości
+## Reaction to Detection
 
-Na pewno znajdzie się trochę błędów i rzeczy do poprawy.  
-Z tych, które przychodzą mi do głowy:
+Because of the timebox, I kept it minimal:  
+- the camera vision area changes material when detection starts  
+- a **detection progress bar** is shown  
+- once filled, a very simple **Game Over** screen appears  
 
-- Trzeba zablokować możliwość przenoszenia `TheftObject` poza obszar przez ściany.  
-- UI jest w mocno debugowej wersji – priorytetem było zmieszczenie się w czasie.
+---
+
+## Refactoring
+
+I restructured a fair bit of the provided code to fit my own programming style.  
+In a real production project I would of course follow the team’s existing codebase standards, but since this was meant to include refactoring, I leaned into cleaning it up.  
+
+---
+
+## Limitations
+
+There are still rough edges. A few that stand out:  
+- objects can currently be carried through walls and out of bounds  
+- the UI is mostly "debug-level" quality since the main focus was mechanics and time management  
+
+---
+
+This is a **prototype**, not a polished game. The goal was to deliver a working system that demonstrates mechanics, flexibility for future growth, and a bit of creativity in how detection is visualized. 
